@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omniqo — AI Automation for Every Business</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ── TOKENS ── */
+    :root {
+      --bg:            #080808;
+      --bg-card:       #111111;
+      --bg-subtle:     #161616;
+      --border:        #222222;
+      --border-light:  #2a2a2a;
+      --fg:            #f2f2f2;
+      --fg-muted:      #888888;
+      --fg-faint:      #444444;
+      --accent:        #f59e0b;
+      --accent-dim:    rgba(245,158,11,0.12);
+      --accent-glow:   rgba(245,158,11,0.25);
+      --radius-sm:     6px;
+      --radius:        10px;
+      --radius-lg:     16px;
+      --font-display:  'Syne', sans-serif;
+      --font-body:     'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-pill:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      padding: 5.5rem 0 4.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    /* glow behind headline */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--border-light);
+      border-radius: 9999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--fg-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: block;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 860px;
+      margin: 0 auto 1.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--fg-muted);
+      max-width: 520px;
+      margin: 0 auto 2.25rem;
+      font-weight: 300;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--fg-muted);
+      font-size: 0.875rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-ghost:hover { color: var(--fg); border-color: var(--border-light); }
+
+    /* video */
+    .video-wrap {
+      position: relative;
+      max-width: 840px;
+      margin: 0 auto;
+      aspect-ratio: 16/9;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: 0 0 0 1px var(--border), 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--fg-faint);
+      font-size: 0.875rem;
+    }
+    .video-ph-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+    .video-ph-icon svg { width: 22px; height: 22px; color: var(--accent); }
+
+    /* stats bar */
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-top: 3.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-card);
+      position: relative;
+      z-index: 1;
+    }
+    .stat-item {
+      flex: 1;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.03em;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── SECTION SHARED ── */
+    .section-tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+    .section-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-lead {
+      color: var(--fg-muted);
+      font-size: 1rem;
+      max-width: 480px;
+      font-weight: 300;
+    }
+
+    /* ── PROBLEM ── */
+    #problem { padding: 5.5rem 0; }
+
+    .problem-header { margin-bottom: 3rem; }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--border);
+      gap: 1px;
+    }
+    @media (max-width: 700px) {
+      .problem-grid { grid-template-columns: 1fr; }
+    }
+
+    .problem-card {
+      background: var(--bg-card);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .problem-card:hover { background: var(--bg-subtle); }
+
+    .prob-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--fg-faint);
+      line-height: 1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.05em;
+    }
+    .problem-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+    .problem-card p {
+      font-size: 0.875rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+    }
+
+    /* ── SOLUTION ── */
+    #solution { padding: 5.5rem 0 7rem; }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .solution-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .benefits-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.4rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: background 0.2s;
+    }
+    .benefit-item:last-child { border-bottom: none; }
+    .benefit-item:hover { background: var(--bg-subtle); }
+
+    .benefit-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-dim);
+      border: 1px solid rgba(245,158,11,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1rem;
+    }
+    .benefit-icon svg {
+      width: 15px;
+      height: 15px;
+      color: var(--accent);
+    }
+    .benefit-text h4 {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.01em;
+    }
+    .benefit-text p {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+      line-height: 1.55;
+    }
+
+    /* calendly */
+    .calendly-wrap {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-card);
+      min-height: 600px;
+      position: relative;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+    .calendly-wrap iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block;
+    }
+    .calendly-ph {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--fg-faint);
+      font-size: 0.875rem;
+      padding: 2rem;
+      text-align: center;
+    }
+    .calendly-ph svg {
+      width: 40px;
+      height: 40px;
+      opacity: 0.35;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+    .calendly-ph strong {
+      color: var(--fg-muted);
+      font-family: var(--font-display);
+      font-size: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--fg);
+      letter-spacing: -0.03em;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--fg-faint);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu  { animation: fadeUp 0.6s ease both; }
+    .d1  { animation-delay: 0.08s; }
+    .d2  { animation-delay: 0.18s; }
+    .d3  { animation-delay: 0.28s; }
+    .d4  { animation-delay: 0.4s; }
+    .d5  { animation-delay: 0.52s; }
+
+    @media (max-width: 500px) {
+      .stats-bar { flex-direction: column; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">Omni<span>qo</span></a>
+    <a href="#solution" class="nav-pill">Book a Free Call →</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════
+     SECTION 1 · HERO
+════════════════════════════════ -->
+<section id="hero">
+  <div class="container">
+
+    <div class="fu">
+      <span class="hero-eyebrow">AI Automation Agency</span>
+    </div>
+
+    <h1 class="hero-h1 fu d1">
+      Stop doing manually what<br/><em>AI can do for you</em>
+    </h1>
+
+    <p class="hero-sub fu d2">
+      Omniqo builds custom AI automation systems for businesses of every size — so you spend less time on repetitive tasks and more time on growth.
+    </p>
+
+    <div class="hero-ctas fu d3">
+      <a href="#solution" class="btn-primary">Book a Free Strategy Call →</a>
+      <a href="#problem" class="btn-ghost">See What We Solve ↓</a>
+    </div>
+
+    <!-- ★ YouTube Placeholder — replace src with your embed URL ★ -->
+    <div class="video-wrap fu d4">
+      <!--
+        REPLACE PLACEHOLDER: uncomment and add your YouTube embed URL below
+        <iframe
+          src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+          title="Omniqo — How It Works"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      -->
+      <div class="video-ph">
+        <div class="video-ph-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <strong style="color:var(--fg-muted); font-family:var(--font-display);">Watch: How Omniqo Works</strong>
+        <span style="font-size:0.78rem;">Replace with your YouTube embed URL</span>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar fu d5">
+      <div class="stat-item">
+        <span class="stat-num">80%</span>
+        <span class="stat-label">Reduction in manual work</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3×</span>
+        <span class="stat-label">Faster response times</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Your systems run non-stop</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">14 days</span>
+        <span class="stat-label">Average go-live time</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ════════════════════════════════
+     SECTION 2 · PROBLEM
+════════════════════════════════ -->
+<section id="problem">
+  <div class="container">
+
+    <div class="problem-header">
+      <span class="section-tag">The Problem</span>
+      <h2 class="section-h2">Your team is drowning<br/>in tasks that shouldn't exist</h2>
+      <p class="section-lead">Most businesses are losing 20+ hours a week to work that could be fully automated. Here's what that looks like.</p>
+    </div>
+
+    <div class="problem-grid">
+
+      <div class="problem-card">
+        <div class="prob-num">01</div>
+        <h3>Copy-pasting data all day</h3>
+        <p>Your team manually moves information between WhatsApp, email, spreadsheets, and CRMs. Every single day. It's slow, error-prone, and a complete waste of skilled people.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="prob-num">02</div>
+        <h3>Leads falling through the cracks</h3>
+        <p>A potential client messages you at 11pm. Nobody replies until 9am. They've already gone to a competitor. Slow follow-up is silently killing your sales pipeline.</p>
+      </div>
+
+      <div class="problem-card">
+        <div class="prob-num">03</div>
+        <h3>Hiring more people to do basic work</h3>
+        <p>The instinct is to hire when things get busy. But most of that busyness is repetitive admin — invoicing, reminders, data entry, reports — that AI can handle in seconds.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+
+<!-- ════════════════════════════════
+     SECTION 3 · SOLUTION
+════════════════════════════════ -->
+<section id="solution">
+  <div class="container">
+
+    <div class="solution-grid">
+
+      <!-- Left: Benefits -->
+      <div>
+        <span class="section-tag">The Solution</span>
+        <h2 class="section-h2">We build the automation.<br/>You keep the results.</h2>
+        <p class="section-lead" style="margin-bottom: 0;">
+          Omniqo designs, builds, and deploys AI systems tailored to your exact business — no generic tools, no technical headaches. Book a free call and we'll map out your automation in 30 minutes.
+        </p>
+
+        <ul class="benefits-list">
+
+          <li class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div class="benefit-text">
+              <h4>Instant lead response — 24/7</h4>
+              <p>AI-powered chatbots and auto-responders reply to every enquiry within seconds, qualify the lead, and book a call — even while you sleep.</p>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 17h7m-3.5-3.5v7"/></svg>
+            </div>
+            <div class="benefit-text">
+              <h4>End-to-end workflow automation</h4>
+              <p>From order confirmations to invoice generation, follow-up emails to reporting — we connect your tools and automate the entire chain, not just one step.</p>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M18 2v6h6"/></svg>
+            </div>
+            <div class="benefit-text">
+              <h4>Save 20+ hours every week</h4>
+              <p>Our clients consistently reclaim a full working week every month. That's time your team can spend on strategy, clients, and growth — not admin.</p>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+            </div>
+            <div class="benefit-text">
+              <h4>Built for your business, not a template</h4>
+              <p>Every automation we build is custom. We study your workflow, identify the biggest bottlenecks, and build solutions that fit — not generic tools you have to adapt to.</p>
+            </div>
+          </li>
+
+          <li class="benefit-item">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="benefit-text">
+              <h4>Live in 14 days, supported ongoing</h4>
+              <p>We move fast. Most projects go live within two weeks. After that, we monitor, maintain, and improve your systems as your business evolves.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Right: Calendly -->
+      <div>
+        <div style="margin-bottom: 1.25rem;">
+          <p style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 0.3rem;">Book your free 30-min strategy call</p>
+          <p style="font-size: 0.875rem; color: var(--fg-muted);">We'll audit your current workflow and show you exactly where AI automation can save you the most time and money. No sales pressure.</p>
+        </div>
+
+        <!-- Calendly inline widget begin -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/izma0657" style="min-width:320px;height:700px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <!-- Calendly inline widget end -->
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container footer-inner">
+    <span class="footer-logo">Omni<span>qo</span></span>
+    <span class="footer-copy">© 2026 Omniqo. All rights reserved.</span>
+    <span class="footer-copy">AI Automation for Every Business</span>
+  </div>
+</footer>
+
+</body>
+</html>
