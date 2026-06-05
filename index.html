@@ -228,47 +228,7 @@
     }
     .btn-ghost:hover { color: var(--fg); border-color: var(--border-light); }
 
-    /* video */
-    .video-wrap {
-      position: relative;
-      max-width: 840px;
-      margin: 0 auto;
-      aspect-ratio: 16/9;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      box-shadow: 0 0 0 1px var(--border), 0 32px 80px rgba(0,0,0,0.6);
-    }
-    .video-wrap iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .video-ph {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: var(--fg-faint);
-      font-size: 0.875rem;
-    }
-    .video-ph-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 1px solid var(--border-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 0.25rem;
-    }
-    .video-ph-icon svg { width: 22px; height: 22px; color: var(--accent); }
+
 
     /* stats bar */
     .stats-bar {
@@ -571,27 +531,6 @@
       <a href="#solution" class="btn-primary">Book a Free Strategy Call →</a>
       <a href="#problem" class="btn-ghost">See What We Solve ↓</a>
     </div>
-
-    <!-- ★ YouTube Placeholder — replace src with your embed URL ★ -->
-    <div class="video-wrap fu d4">
-      <!--
-        REPLACE PLACEHOLDER: uncomment and add your YouTube embed URL below
-        <iframe
-          src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-          title="Omniqo — How It Works"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
-      -->
-      <div class="video-ph">
-        <div class="video-ph-icon">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <strong style="color:var(--fg-muted); font-family:var(--font-display);">Watch: How Omniqo Works</strong>
-        <span style="font-size:0.78rem;">Replace with your YouTube embed URL</span>
-      </div>
-    </div>
-
     <!-- Stats -->
     <div class="stats-bar fu d5">
       <div class="stat-item">
