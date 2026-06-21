@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Omniqo — AI Automation for Every Business</title>
-  <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" async></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" async></script>
+
   <style>
 
     /* ── TOKENS ── */
@@ -697,8 +698,10 @@
 </footer>
 
 <!-- ── OPENAI CHATKIT WIDGET ── -->
-<openai-chatkit></openai-chatkit>
-<script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" async></script>
+<openai-chatkit
+  style="width: 100%; height: 600px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);"
+></openai-chatkit>
+
 <script>
   const DOMAIN_KEY = 'domain_pk_6a32dcc152dc81909d917d13b82921d202860f273e5c16da';
   const API_URL = 'https://openai.secondbrainos.com/chatkit';
@@ -723,23 +726,23 @@
           fetch: customFetch,
         },
         theme: {
-          colorScheme: 'dark',
+          colorScheme: 'light',
           color: {
-            accent: { primary: '#f59e0b', level: 2 },
+            accent: { primary: '#4F46E5', level: 2 },
           },
           radius: 'round',
           density: 'spacious',
         },
         startScreen: {
-          greeting: 'Hi! I can help you learn about Omniqo or book a free strategy call. What would you like to do?',
+          greeting: 'Hi! I can help you book, reschedule, or cancel appointments. What would you like to do?',
           prompts: [
-            { label: 'Book a free call', prompt: 'I want to book a free strategy call', icon: 'calendar' },
+            { label: 'Book an appointment', prompt: 'I want to book an appointment', icon: 'calendar' },
             { label: 'Check availability', prompt: 'What times are available?', icon: 'clock' },
-            { label: 'Learn about Omniqo', prompt: 'What services does Omniqo offer?', icon: 'reload' }
+            { label: 'Reschedule', prompt: 'I need to reschedule my appointment', icon: 'reload' }
           ]
         },
         composer: {
-          placeholder: 'Ask me anything about Omniqo...'
+          placeholder: 'Ask me about scheduling...'
         }
       });
     } else {
