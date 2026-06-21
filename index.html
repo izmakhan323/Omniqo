@@ -697,12 +697,281 @@
   </div>
 </footer>
 
-<!-- ── OPENAI CHATKIT WIDGET ── -->
-<openai-chatkit
-  style="width: 100%; height: 600px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);"
-></openai-chatkit>
+<!-- ── OPENAI CHATKIT FLOATING WIDGET ── -->
+<style>
+  /* Floating button */
+  #chat-launcher {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  /* Tooltip bubble above button */
+  #chat-tooltip {
+    background: #ffffff;
+    color: #111111;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.5rem 0.875rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    white-space: nowrap;
+    animation: tooltipBounce 2.5s ease-in-out infinite;
+    position: relative;
+  }
+  #chat-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  @keyframes tooltipBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* Main button */
+  #chat-btn {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0.4);
+    animation: chatPulse 2.5s infinite;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  #chat-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 32px rgba(245,158,11,0.65);
+  }
+  #chat-btn svg {
+    width: 28px;
+    height: 28px;
+    color: #000;
+    transition: opacity 0.2s;
+  }
+  @keyframes chatPulse {
+    0% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0.4); }
+    70% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 14px rgba(245,158,11,0); }
+    100% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0); }
+  }
+
+  /* Notification dot */
+  #chat-btn::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 12px;
+    height: 12px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid #080808;
+  }
+
+  /* Chat popup window */
+  #chat-popup {
+    position: fixed;
+    bottom: 104px;
+    right: 28px;
+    width: 380px;
+    height: 560px;
+    z-index: 9998;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
+    display: none;
+    flex-direction: column;
+    transform: scale(0.92) translateY(16px);
+    opacity: 0;
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+  }
+  #chat-popup.open {
+    display: flex;
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  #chat-popup.animating {
+    display: flex;
+  }
+
+  /* Popup header */
+  #chat-header {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.875rem;
+    color: #000;
+  }
+  .chat-header-text h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #000;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .chat-header-text span {
+    font-size: 0.7rem;
+    color: rgba(0,0,0,0.65);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .chat-header-text span::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: block;
+  }
+  #chat-close {
+    background: rgba(0,0,0,0.12);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    transition: background 0.15s;
+  }
+  #chat-close:hover { background: rgba(0,0,0,0.22); }
+  #chat-close svg { width: 14px; height: 14px; }
+
+  /* Widget container */
+  #chat-widget-container {
+    flex: 1;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  #chat-widget-container openai-chatkit {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (max-width: 480px) {
+    #chat-popup {
+      width: calc(100vw - 24px);
+      right: 12px;
+      bottom: 96px;
+    }
+    #chat-launcher {
+      right: 16px;
+      bottom: 20px;
+    }
+  }
+</style>
+
+<!-- Floating launcher -->
+<div id="chat-launcher">
+  <div id="chat-tooltip">💬 Ask me anything!</div>
+  <button id="chat-btn" aria-label="Open chat">
+    <!-- Chat icon -->
+    <svg id="icon-chat" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+    </svg>
+    <!-- Close icon (hidden by default) -->
+    <svg id="icon-close" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+</div>
+
+<!-- Chat popup window -->
+<div id="chat-popup">
+  <div id="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">OQ</div>
+      <div class="chat-header-text">
+        <h4>Omniqo Assistant</h4>
+        <span>Online — replies instantly</span>
+      </div>
+    </div>
+    <button id="chat-close" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </button>
+  </div>
+  <div id="chat-widget-container">
+    <openai-chatkit style="width:100%;height:100%;display:block;"></openai-chatkit>
+  </div>
+</div>
 
 <script>
+  // ── Toggle logic ──
+  const btn       = document.getElementById('chat-btn');
+  const popup     = document.getElementById('chat-popup');
+  const closeBtn  = document.getElementById('chat-close');
+  const tooltip   = document.getElementById('chat-tooltip');
+  const iconChat  = document.getElementById('icon-chat');
+  const iconClose = document.getElementById('icon-close');
+  let isOpen = false;
+
+  function openChat() {
+    isOpen = true;
+    tooltip.style.display = 'none';
+    iconChat.style.display = 'none';
+    iconClose.style.display = 'block';
+    popup.style.display = 'flex';
+    requestAnimationFrame(() => popup.classList.add('open'));
+  }
+
+  function closeChat() {
+    isOpen = false;
+    iconChat.style.display = 'block';
+    iconClose.style.display = 'none';
+    popup.classList.remove('open');
+    setTimeout(() => { if (!isOpen) popup.style.display = 'none'; }, 250);
+  }
+
+  btn.addEventListener('click', () => isOpen ? closeChat() : openChat());
+  closeBtn.addEventListener('click', closeChat);
+
+  // Hide tooltip after 6 seconds
+  setTimeout(() => { tooltip.style.display = 'none'; }, 6000);
+
+  // ── ChatKit init ──
   const DOMAIN_KEY = 'domain_pk_6a32dcc152dc81909d917d13b82921d202860f273e5c16da';
   const API_URL = 'https://openai.secondbrainos.com/chatkit';
 
@@ -728,7 +997,7 @@
         theme: {
           colorScheme: 'light',
           color: {
-            accent: { primary: '#4F46E5', level: 2 },
+            accent: { primary: '#f59e0b', level: 2 },
           },
           radius: 'round',
           density: 'spacious',
