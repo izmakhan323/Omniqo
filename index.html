@@ -6,29 +6,33 @@
   <title>Omniqo — AI Automation for Every Business</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" async></script>
-
   <style>
 
-    /* ── TOKENS ── */
+    /* ═══════════════════════════════
+       DESIGN TOKENS — Trust & Reliability palette
+       Navy + Teal + White
+    ═══════════════════════════════ */
     :root {
-      --bg:            #080808;
-      --bg-card:       #111111;
-      --bg-subtle:     #161616;
-      --border:        #222222;
-      --border-light:  #2a2a2a;
-      --fg:            #f2f2f2;
-      --fg-muted:      #888888;
-      --fg-faint:      #444444;
-      --accent:        #f59e0b;
-      --accent-dim:    rgba(245,158,11,0.12);
-      --accent-glow:   rgba(245,158,11,0.25);
-      --radius-sm:     6px;
-      --radius:        10px;
-      --radius-lg:     16px;
-      --font-display:  'Syne', sans-serif;
-      --font-body:     'DM Sans', sans-serif;
+      --bg:           #0a0f1e;
+      --bg-card:      #0f1628;
+      --bg-subtle:    #131a30;
+      --border:       #1e2a45;
+      --border-light: #253355;
+      --fg:           #eef2ff;
+      --fg-muted:     #7e8fb5;
+      --fg-faint:     #2d3a5a;
+      --accent:       #0ea5e9;
+      --accent-2:     #14b8a6;
+      --accent-dim:   rgba(14,165,233,0.12);
+      --accent-glow:  rgba(14,165,233,0.2);
+      --trust:        #3b82f6;
+      --radius-sm:    6px;
+      --radius:       10px;
+      --radius-lg:    16px;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,50 +46,58 @@
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
 
-    /* ── NOISE OVERLAY ── */
+    /* subtle grid pattern background */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image:
+        linear-gradient(rgba(14,165,233,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.5;
     }
 
+    img, svg, video { max-width: 100%; height: auto; }
+
     .container {
+      width: 100%;
       max-width: 1080px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
       position: relative;
       z-index: 1;
     }
 
-    /* ── NAV ── */
+    /* ═══ NAV ═══ */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border);
-      background: rgba(8,8,8,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(10,15,30,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 58px;
+      height: 60px;
     }
     .nav-logo {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: var(--fg);
       text-decoration: none;
       letter-spacing: -0.03em;
+      flex-shrink: 0;
     }
     .nav-logo span { color: var(--accent); }
     .nav-pill {
@@ -93,34 +105,32 @@
       align-items: center;
       gap: 0.4rem;
       background: var(--accent);
-      color: #000;
+      color: #fff;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.8rem;
-      padding: 0.45rem 1.1rem;
+      padding: 0.5rem 1.1rem;
       border-radius: 9999px;
       text-decoration: none;
       transition: opacity 0.15s, transform 0.15s;
-      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
     .nav-pill:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* ── HERO ── */
+    /* ═══ HERO ═══ */
     #hero {
-      padding: 5.5rem 0 4.5rem;
+      padding: 4.5rem 0 4rem;
       text-align: center;
       position: relative;
     }
-
-    /* glow behind headline */
     #hero::after {
       content: '';
       position: absolute;
-      top: 30%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 600px;
-      height: 300px;
+      width: min(600px, 100vw);
+      height: 280px;
       background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
@@ -133,12 +143,12 @@
       border: 1px solid var(--border-light);
       border-radius: 9999px;
       padding: 0.3rem 0.9rem;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--fg-muted);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
       position: relative;
       z-index: 1;
     }
@@ -147,36 +157,41 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent);
+      background: var(--accent-2);
       display: block;
-      animation: pulse 2s infinite;
+      animation: blink 2s infinite;
+      flex-shrink: 0;
     }
-    @keyframes pulse {
+    @keyframes blink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+      50% { opacity: 0.2; }
     }
 
     .hero-h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+      font-size: clamp(2rem, 7vw, 4rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1.05;
-      max-width: 860px;
-      margin: 0 auto 1.4rem;
+      max-width: 820px;
+      margin: 0 auto 1.25rem;
       position: relative;
       z-index: 1;
+      word-break: break-word;
     }
     .hero-h1 em {
       font-style: normal;
-      color: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-sub {
-      font-size: 1.0625rem;
+      font-size: clamp(0.95rem, 2.5vw, 1.0625rem);
       color: var(--fg-muted);
-      max-width: 520px;
-      margin: 0 auto 2.25rem;
+      max-width: 500px;
+      margin: 0 auto 2rem;
       font-weight: 300;
       line-height: 1.7;
       position: relative;
@@ -187,9 +202,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.875rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      margin-bottom: 3.75rem;
+      margin-bottom: 3rem;
       position: relative;
       z-index: 1;
     }
@@ -198,23 +213,22 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--accent);
-      color: #000;
+      background: linear-gradient(135deg, var(--accent), var(--trust));
+      color: #fff;
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 0.875rem;
-      padding: 0.7rem 1.5rem;
+      padding: 0.75rem 1.5rem;
       border-radius: var(--radius);
       text-decoration: none;
       transition: opacity 0.15s, transform 0.15s, box-shadow 0.2s;
-      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
     .btn-primary:hover {
       opacity: 0.9;
       transform: translateY(-2px);
       box-shadow: 0 8px 30px var(--accent-glow);
     }
-
     .btn-ghost {
       display: inline-flex;
       align-items: center;
@@ -222,23 +236,44 @@
       background: transparent;
       color: var(--fg-muted);
       font-size: 0.875rem;
-      padding: 0.7rem 1.25rem;
+      padding: 0.75rem 1.25rem;
       border-radius: var(--radius);
       border: 1px solid var(--border);
       text-decoration: none;
       transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
     }
     .btn-ghost:hover { color: var(--fg); border-color: var(--border-light); }
 
-
-
-    /* stats bar */
-    .stats-bar {
+    /* trust badges */
+    .trust-badges {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0;
-      margin-top: 3.5rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+    }
+    .trust-badge svg {
+      width: 14px;
+      height: 14px;
+      color: var(--accent-2);
+      flex-shrink: 0;
+    }
+
+    /* stats */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
@@ -246,63 +281,73 @@
       position: relative;
       z-index: 1;
     }
+    @media (max-width: 600px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    }
     .stat-item {
-      flex: 1;
-      padding: 1.5rem 1rem;
+      padding: 1.25rem 0.75rem;
       text-align: center;
       border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
-    .stat-item:last-child { border-right: none; }
+    .stat-item:nth-child(2n) { border-right: none; }
+    @media (min-width: 601px) {
+      .stat-item { border-bottom: none; }
+      .stat-item:nth-child(2n) { border-right: 1px solid var(--border); }
+      .stat-item:last-child { border-right: none; }
+    }
     .stat-num {
       font-family: var(--font-display);
-      font-size: 1.75rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       display: block;
+      letter-spacing: -0.03em;
     }
     .stat-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--fg-muted);
       margin-top: 0.2rem;
+      line-height: 1.3;
     }
 
-    /* ── DIVIDER ── */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
+    /* ═══ DIVIDER ═══ */
+    .divider { border: none; border-top: 1px solid var(--border); }
 
-    /* ── SECTION SHARED ── */
+    /* ═══ SECTION SHARED ═══ */
     .section-tag {
       display: inline-block;
       font-family: var(--font-display);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--accent);
-      margin-bottom: 0.875rem;
+      margin-bottom: 0.75rem;
     }
     .section-h2 {
       font-family: var(--font-display);
-      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
       font-weight: 800;
       letter-spacing: -0.035em;
       line-height: 1.1;
-      margin-bottom: 1rem;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
     }
     .section-lead {
       color: var(--fg-muted);
-      font-size: 1rem;
+      font-size: 0.9875rem;
       max-width: 480px;
       font-weight: 300;
+      line-height: 1.7;
     }
 
-    /* ── PROBLEM ── */
-    #problem { padding: 5.5rem 0; }
-
-    .problem-header { margin-bottom: 3rem; }
+    /* ═══ PROBLEM ═══ */
+    #problem { padding: 5rem 0; }
+    .problem-header { margin-bottom: 2.5rem; }
 
     .problem-grid {
       display: grid;
@@ -313,54 +358,116 @@
       background: var(--border);
       gap: 1px;
     }
-    @media (max-width: 700px) {
+    @media (max-width: 680px) {
       .problem-grid { grid-template-columns: 1fr; }
     }
 
     .problem-card {
       background: var(--bg-card);
-      padding: 2rem 1.75rem;
+      padding: 1.75rem 1.5rem;
       transition: background 0.2s;
-      position: relative;
     }
     .problem-card:hover { background: var(--bg-subtle); }
 
     .prob-num {
       font-family: var(--font-display);
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--fg-faint);
       line-height: 1;
-      margin-bottom: 1rem;
+      margin-bottom: 0.875rem;
       letter-spacing: -0.05em;
     }
     .problem-card h3 {
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 0.9375rem;
       font-weight: 700;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
       letter-spacing: -0.01em;
       color: var(--fg);
     }
     .problem-card p {
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: var(--fg-muted);
       line-height: 1.6;
     }
 
-    /* ── SOLUTION ── */
-    #solution { padding: 5.5rem 0 7rem; }
+    /* ═══ SOLUTION ═══ */
+    #solution { padding: 5rem 0 6rem; }
 
     .solution-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      gap: 3.5rem;
       align-items: start;
     }
     @media (max-width: 768px) {
-      .solution-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .solution-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
     }
 
+    /* process steps */
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1.75rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 28px;
+      bottom: 28px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+      opacity: 0.3;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.1rem 0;
+      position: relative;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-text h4 {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+    .step-text p {
+      font-size: 0.84rem;
+      color: var(--fg-muted);
+      line-height: 1.55;
+    }
+
+    /* benefits */
     .benefits-list {
       list-style: none;
       display: flex;
@@ -371,47 +478,46 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
     }
-
     .benefit-item {
       display: flex;
       gap: 1rem;
       align-items: flex-start;
-      padding: 1.4rem 1.5rem;
+      padding: 1.25rem 1.4rem;
       border-bottom: 1px solid var(--border);
       background: var(--bg-card);
       transition: background 0.2s;
     }
     .benefit-item:last-child { border-bottom: none; }
     .benefit-item:hover { background: var(--bg-subtle); }
-
     .benefit-icon {
       flex-shrink: 0;
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: var(--radius-sm);
       background: var(--accent-dim);
-      border: 1px solid rgba(245,158,11,0.2);
+      border: 1px solid rgba(14,165,233,0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-top: 0.1rem;
     }
     .benefit-icon svg {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       color: var(--accent);
     }
     .benefit-text h4 {
       font-family: var(--font-display);
-      font-size: 0.9375rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
       letter-spacing: -0.01em;
+      color: var(--fg);
     }
     .benefit-text p {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--fg-muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     /* calendly */
@@ -420,43 +526,58 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
       background: var(--bg-card);
-      min-height: 600px;
+      min-height: 580px;
       position: relative;
-      box-shadow: 0 0 0 1px var(--border);
     }
-    .calendly-wrap iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      display: block;
-    }
-    .calendly-ph {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: var(--fg-faint);
-      font-size: 0.875rem;
-      padding: 2rem;
-      text-align: center;
-    }
-    .calendly-ph svg {
-      width: 40px;
-      height: 40px;
-      opacity: 0.35;
-      margin-bottom: 0.5rem;
-      color: var(--accent);
-    }
-    .calendly-ph strong {
-      color: var(--fg-muted);
-      font-family: var(--font-display);
-      font-size: 1rem;
+    .calendly-wrap .calendly-inline-widget {
+      min-height: 580px;
     }
 
-    /* ── FOOTER ── */
+    /* ═══ TESTIMONIAL ═══ */
+    .testimonial-strip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .testimonial-strip { grid-template-columns: 1fr; }
+    }
+    .testimonial {
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-subtle);
+    }
+    .testimonial-stars {
+      color: var(--accent);
+      font-size: 0.8rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 2px;
+    }
+    .testimonial p {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+    .testimonial-author {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .testimonial-role {
+      font-size: 0.72rem;
+      color: var(--fg-muted);
+    }
+
+    /* ═══ FOOTER ═══ */
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem 0;
@@ -476,68 +597,198 @@
       letter-spacing: -0.03em;
     }
     .footer-logo span { color: var(--accent); }
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--fg-faint);
-    }
+    .footer-copy { font-size: 0.78rem; color: var(--fg-faint); }
 
-    /* ── ANIMATIONS ── */
+    /* ═══ ANIMATIONS ═══ */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .fu  { animation: fadeUp 0.6s ease both; }
+    .fu  { animation: fadeUp 0.55s ease both; }
     .d1  { animation-delay: 0.08s; }
     .d2  { animation-delay: 0.18s; }
     .d3  { animation-delay: 0.28s; }
     .d4  { animation-delay: 0.4s; }
     .d5  { animation-delay: 0.52s; }
 
-    @media (max-width: 500px) {
-      .stats-bar { flex-direction: column; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-item:last-child { border-bottom: none; }
+    /* ═══ CHAT WIDGET ═══ */
+    #chat-launcher {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
     }
+    #chat-tooltip {
+      background: #fff;
+      color: #111;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.45rem 0.875rem;
+      border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+      white-space: nowrap;
+      animation: tooltipBounce 2.5s ease-in-out infinite;
+      position: relative;
+    }
+    #chat-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      right: 18px;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+    @keyframes tooltipBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    #chat-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--trust));
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(14,165,233,0.45), 0 0 0 0 rgba(14,165,233,0.3);
+      animation: chatPulse 2.5s infinite;
+      transition: transform 0.2s;
+      position: relative;
+    }
+    #chat-btn:hover { transform: scale(1.08); }
+    #chat-btn svg { width: 26px; height: 26px; color: #fff; }
+    @keyframes chatPulse {
+      0%   { box-shadow: 0 4px 24px rgba(14,165,233,0.45), 0 0 0 0 rgba(14,165,233,0.3); }
+      70%  { box-shadow: 0 4px 24px rgba(14,165,233,0.45), 0 0 0 12px rgba(14,165,233,0); }
+      100% { box-shadow: 0 4px 24px rgba(14,165,233,0.45), 0 0 0 0 rgba(14,165,233,0); }
+    }
+    #chat-btn::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 11px;
+      height: 11px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+    #chat-popup {
+      position: fixed;
+      bottom: 96px;
+      right: 24px;
+      width: 360px;
+      height: 540px;
+      z-index: 9998;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+      display: none;
+      flex-direction: column;
+      transform: scale(0.92) translateY(16px);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
+    }
+    #chat-popup.open { display: flex; transform: scale(1) translateY(0); opacity: 1; }
+    #chat-header {
+      background: linear-gradient(135deg, var(--accent), var(--trust));
+      padding: 0.875rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .chat-header-info { display: flex; align-items: center; gap: 0.6rem; }
+    .chat-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; color: #fff;
+    }
+    .chat-header-text h4 { font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; color: #fff; margin: 0; line-height: 1.2; }
+    .chat-header-text span { font-size: 0.68rem; color: rgba(255,255,255,0.75); display: flex; align-items: center; gap: 4px; }
+    .chat-header-text span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #22c55e; display: block; }
+    #chat-close { background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #fff; transition: background 0.15s; }
+    #chat-close:hover { background: rgba(255,255,255,0.25); }
+    #chat-close svg { width: 13px; height: 13px; }
+    #chat-widget-container { flex: 1; overflow: hidden; background: #fff; }
+    #chat-widget-container openai-chatkit { width: 100%; height: 100%; display: block; }
+
+    @media (max-width: 480px) {
+      #chat-popup { width: calc(100vw - 20px); right: 10px; bottom: 88px; height: 500px; }
+      #chat-launcher { right: 16px; bottom: 16px; }
+    }
+
   </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- ═══ NAV ═══ -->
 <nav>
   <div class="container nav-inner">
     <a href="#" class="nav-logo">Omni<span>qo</span></a>
-    <a href="#solution" class="nav-pill">Book a Free Call →</a>
+    <a href="#solution" class="nav-pill">Book Free Call →</a>
   </div>
 </nav>
 
 
-<!-- ════════════════════════════════
+<!-- ═══════════════════════════════
      SECTION 1 · HERO
-════════════════════════════════ -->
+═══════════════════════════════ -->
 <section id="hero">
   <div class="container">
 
     <div class="fu">
-      <span class="hero-eyebrow">AI Automation Agency</span>
+      <span class="hero-eyebrow">AI Automation Agency · Trusted by Growing Businesses</span>
     </div>
 
     <h1 class="hero-h1 fu d1">
-      Stop doing manually what<br/><em>AI can do for you</em>
+      Stop doing manually<br/>what <em>AI can do</em> for you
     </h1>
 
     <p class="hero-sub fu d2">
-      Omniqo builds custom AI automation systems for businesses of every size — so you spend less time on repetitive tasks and more time on growth.
+      Omniqo builds custom AI automation systems that save your team 20+ hours every week — so you can focus on clients, growth, and what actually matters.
     </p>
 
     <div class="hero-ctas fu d3">
       <a href="#solution" class="btn-primary">Book a Free Strategy Call →</a>
-      <a href="#problem" class="btn-ghost">See What We Solve ↓</a>
+      <a href="#problem" class="btn-ghost">See How It Works ↓</a>
     </div>
+
+    <!-- Trust badges -->
+    <div class="trust-badges fu d3">
+      <span class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        No contracts
+      </span>
+      <span class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Free discovery call
+      </span>
+      <span class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Live in 14 days
+      </span>
+      <span class="trust-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        100% custom built
+      </span>
+    </div>
+
     <!-- Stats -->
     <div class="stats-bar fu d5">
       <div class="stat-item">
         <span class="stat-num">80%</span>
-        <span class="stat-label">Reduction in manual work</span>
+        <span class="stat-label">Less manual work</span>
       </div>
       <div class="stat-item">
         <span class="stat-num">3×</span>
@@ -545,7 +796,7 @@
       </div>
       <div class="stat-item">
         <span class="stat-num">24/7</span>
-        <span class="stat-label">Your systems run non-stop</span>
+        <span class="stat-label">Systems run non-stop</span>
       </div>
       <div class="stat-item">
         <span class="stat-num">14 days</span>
@@ -559,38 +810,50 @@
 <hr class="divider" />
 
 
-<!-- ════════════════════════════════
+<!-- ═══════════════════════════════
      SECTION 2 · PROBLEM
-════════════════════════════════ -->
+═══════════════════════════════ -->
 <section id="problem">
   <div class="container">
 
     <div class="problem-header">
       <span class="section-tag">The Problem</span>
-      <h2 class="section-h2">Your team is drowning<br/>in tasks that shouldn't exist</h2>
-      <p class="section-lead">Most businesses are losing 20+ hours a week to work that could be fully automated. Here's what that looks like.</p>
+      <h2 class="section-h2">Your team is losing hours<br/>to work that shouldn't exist</h2>
+      <p class="section-lead">Most businesses waste 20+ hours a week on repetitive tasks that AI could handle in seconds. Here is exactly what that looks like.</p>
     </div>
 
     <div class="problem-grid">
-
       <div class="problem-card">
         <div class="prob-num">01</div>
         <h3>Copy-pasting data all day</h3>
-        <p>Your team manually moves information between WhatsApp, email, spreadsheets, and CRMs. Every single day. It's slow, error-prone, and a complete waste of skilled people.</p>
+        <p>Your team manually moves information between WhatsApp, email, spreadsheets, and CRMs every single day. It's slow, error-prone, and a complete waste of skilled people's time.</p>
       </div>
-
       <div class="problem-card">
         <div class="prob-num">02</div>
         <h3>Leads falling through the cracks</h3>
-        <p>A potential client messages you at 11pm. Nobody replies until 9am. They've already gone to a competitor. Slow follow-up is silently killing your sales pipeline.</p>
+        <p>A potential client messages at 11pm. Nobody replies until 9am. They've already gone to a competitor. Slow follow-up is silently killing your sales pipeline every single day.</p>
       </div>
-
       <div class="problem-card">
         <div class="prob-num">03</div>
-        <h3>Hiring more people to do basic work</h3>
-        <p>The instinct is to hire when things get busy. But most of that busyness is repetitive admin — invoicing, reminders, data entry, reports — that AI can handle in seconds.</p>
+        <h3>Hiring more staff for basic work</h3>
+        <p>The instinct is to hire when things get busy. But most of that busyness is repetitive admin — invoicing, reminders, data entry, reports — that AI handles in seconds for a fraction of the cost.</p>
       </div>
+    </div>
 
+    <!-- Testimonials -->
+    <div class="testimonial-strip">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Omniqo automated our entire client onboarding process. What used to take 3 hours now happens instantly while we sleep."</p>
+        <div class="testimonial-author">Sarah M.</div>
+        <div class="testimonial-role">Founder, Digital Agency</div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"We were spending 4 hours a day on manual follow-ups. Omniqo built us an AI system that does it all automatically — our sales went up 40%."</p>
+        <div class="testimonial-author">Ahmed K.</div>
+        <div class="testimonial-role">CEO, E-commerce Brand</div>
+      </div>
     </div>
 
   </div>
@@ -599,88 +862,97 @@
 <hr class="divider" />
 
 
-<!-- ════════════════════════════════
+<!-- ═══════════════════════════════
      SECTION 3 · SOLUTION
-════════════════════════════════ -->
+═══════════════════════════════ -->
 <section id="solution">
   <div class="container">
-
     <div class="solution-grid">
 
-      <!-- Left: Benefits -->
+      <!-- Left: Content -->
       <div>
         <span class="section-tag">The Solution</span>
         <h2 class="section-h2">We build the automation.<br/>You keep the results.</h2>
-        <p class="section-lead" style="margin-bottom: 0;">
-          Omniqo designs, builds, and deploys AI systems tailored to your exact business — no generic tools, no technical headaches. Book a free call and we'll map out your automation in 30 minutes.
+        <p class="section-lead">
+          Omniqo designs, builds, and deploys AI systems tailored to your exact business — no generic tools, no technical headaches, no wasted hours.
         </p>
 
-        <ul class="benefits-list">
+        <!-- How it works steps -->
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <h4>Free 15-min strategy call</h4>
+              <p>We map your workflow and identify exactly where AI saves you the most time and money.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <h4>Custom system designed for you</h4>
+              <p>We build a tailored automation system — not a template, not a generic tool. Built around your specific business.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <h4>Go live in 14 days</h4>
+              <p>Your automation is deployed, tested, and running. We train your team and handle everything technical.</p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <h4>Ongoing support & improvements</h4>
+              <p>We monitor, maintain, and improve your systems as your business evolves. You're never left alone.</p>
+            </div>
+          </div>
+        </div>
 
+        <!-- Benefits -->
+        <ul class="benefits-list">
           <li class="benefit-item">
             <div class="benefit-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             </div>
             <div class="benefit-text">
               <h4>Instant lead response — 24/7</h4>
-              <p>AI-powered chatbots and auto-responders reply to every enquiry within seconds, qualify the lead, and book a call — even while you sleep.</p>
+              <p>AI chatbots reply to every enquiry in seconds, qualify leads, and book calls — even while you sleep.</p>
             </div>
           </li>
-
           <li class="benefit-item">
             <div class="benefit-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 17h7m-3.5-3.5v7"/></svg>
             </div>
             <div class="benefit-text">
-              <h4>End-to-end workflow automation</h4>
-              <p>From order confirmations to invoice generation, follow-up emails to reporting — we connect your tools and automate the entire chain, not just one step.</p>
+              <h4>Full workflow automation</h4>
+              <p>From invoicing to follow-ups — we automate the entire chain, not just one step.</p>
             </div>
           </li>
-
-          <li class="benefit-item">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M18 2v6h6"/></svg>
-            </div>
-            <div class="benefit-text">
-              <h4>Save 20+ hours every week</h4>
-              <p>Our clients consistently reclaim a full working week every month. That's time your team can spend on strategy, clients, and growth — not admin.</p>
-            </div>
-          </li>
-
-          <li class="benefit-item">
-            <div class="benefit-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-            </div>
-            <div class="benefit-text">
-              <h4>Built for your business, not a template</h4>
-              <p>Every automation we build is custom. We study your workflow, identify the biggest bottlenecks, and build solutions that fit — not generic tools you have to adapt to.</p>
-            </div>
-          </li>
-
           <li class="benefit-item">
             <div class="benefit-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="benefit-text">
-              <h4>Live in 14 days, supported ongoing</h4>
-              <p>We move fast. Most projects go live within two weeks. After that, we monitor, maintain, and improve your systems as your business evolves.</p>
+              <h4>Secure, reliable & scalable</h4>
+              <p>Built with enterprise-grade reliability. Your systems run 24/7 without interruption as you grow.</p>
             </div>
           </li>
-
         </ul>
       </div>
 
       <!-- Right: Calendly -->
       <div>
-        <div style="margin-bottom: 1.25rem;">
-          <p style="font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 0.3rem;">Book your free 15-min strategy call</p>
-          <p style="font-size: 0.875rem; color: var(--fg-muted);">We'll audit your current workflow and show you exactly where AI automation can save you the most time and money. No sales pressure.</p>
+        <div style="margin-bottom:1.1rem;">
+          <p style="font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:-0.02em;margin-bottom:0.3rem;">Book your free 15-min strategy call</p>
+          <p style="font-size:0.84rem;color:var(--fg-muted);line-height:1.6;">We will audit your current workflow and show you exactly where AI automation saves you the most time and money. No sales pressure — just real value.</p>
         </div>
-
-        <!-- Calendly inline widget begin -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/izma0657" style="min-width:320px;height:700px;"></div>
-        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <!-- Calendly inline widget end -->
+        <div class="calendly-wrap">
+          <!-- Calendly inline widget begin -->
+          <div class="calendly-inline-widget" data-url="https://calendly.com/izma0657" style="min-width:280px;height:580px;"></div>
+          <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <!-- Calendly inline widget end -->
+        </div>
       </div>
 
     </div>
@@ -688,7 +960,7 @@
 </section>
 
 
-<!-- ── FOOTER ── -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="container footer-inner">
     <span class="footer-logo">Omni<span>qo</span></span>
@@ -697,227 +969,20 @@
   </div>
 </footer>
 
-<!-- ── OPENAI CHATKIT FLOATING WIDGET ── -->
+
+<!-- ═══ CHAT WIDGET ═══ -->
 <style>
-  /* Floating button */
-  #chat-launcher {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-  }
-
-  /* Tooltip bubble above button */
-  #chat-tooltip {
-    background: #ffffff;
-    color: #111111;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    padding: 0.5rem 0.875rem;
-    border-radius: 9999px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
-    white-space: nowrap;
-    animation: tooltipBounce 2.5s ease-in-out infinite;
-    position: relative;
-  }
-  #chat-tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    right: 20px;
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-  }
-  @keyframes tooltipBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
-  /* Main button */
-  #chat-btn {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0.4);
-    animation: chatPulse 2.5s infinite;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-  }
-  #chat-btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 32px rgba(245,158,11,0.65);
-  }
-  #chat-btn svg {
-    width: 28px;
-    height: 28px;
-    color: #000;
-    transition: opacity 0.2s;
-  }
-  @keyframes chatPulse {
-    0% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0.4); }
-    70% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 14px rgba(245,158,11,0); }
-    100% { box-shadow: 0 4px 24px rgba(245,158,11,0.5), 0 0 0 0 rgba(245,158,11,0); }
-  }
-
-  /* Notification dot */
-  #chat-btn::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 12px;
-    height: 12px;
-    background: #22c55e;
-    border-radius: 50%;
-    border: 2px solid #080808;
-  }
-
-  /* Chat popup window */
-  #chat-popup {
-    position: fixed;
-    bottom: 104px;
-    right: 28px;
-    width: 380px;
-    height: 560px;
-    z-index: 9998;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
-    display: none;
-    flex-direction: column;
-    transform: scale(0.92) translateY(16px);
-    opacity: 0;
-    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
-  }
-  #chat-popup.open {
-    display: flex;
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-  #chat-popup.animating {
-    display: flex;
-  }
-
-  /* Popup header */
-  #chat-header {
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    padding: 1rem 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-  }
-  .chat-header-info {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-  .chat-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 0.875rem;
-    color: #000;
-  }
-  .chat-header-text h4 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 0.875rem;
-    color: #000;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .chat-header-text span {
-    font-size: 0.7rem;
-    color: rgba(0,0,0,0.65);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .chat-header-text span::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #22c55e;
-    display: block;
-  }
-  #chat-close {
-    background: rgba(0,0,0,0.12);
-    border: none;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    transition: background 0.15s;
-  }
-  #chat-close:hover { background: rgba(0,0,0,0.22); }
-  #chat-close svg { width: 14px; height: 14px; }
-
-  /* Widget container */
-  #chat-widget-container {
-    flex: 1;
-    overflow: hidden;
-    background: #ffffff;
-  }
-  #chat-widget-container openai-chatkit {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  @media (max-width: 480px) {
-    #chat-popup {
-      width: calc(100vw - 24px);
-      right: 12px;
-      bottom: 96px;
-    }
-    #chat-launcher {
-      right: 16px;
-      bottom: 20px;
-    }
-  }
+  #chat-launcher { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
 </style>
 
-<!-- Floating launcher -->
 <div id="chat-launcher">
   <div id="chat-tooltip">💬 Ask me anything!</div>
   <button id="chat-btn" aria-label="Open chat">
-    <!-- Chat icon -->
-    <svg id="icon-chat" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
-    </svg>
-    <!-- Close icon (hidden by default) -->
-    <svg id="icon-close" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-    </svg>
+    <svg id="icon-chat" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+    <svg id="icon-close" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
   </button>
 </div>
 
-<!-- Chat popup window -->
 <div id="chat-popup">
   <div id="chat-header">
     <div class="chat-header-info">
@@ -928,9 +993,7 @@
       </div>
     </div>
     <button id="chat-close" aria-label="Close chat">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
     </button>
   </div>
   <div id="chat-widget-container">
@@ -939,12 +1002,11 @@
 </div>
 
 <script>
-  // ── Toggle logic ──
-  const btn       = document.getElementById('chat-btn');
-  const popup     = document.getElementById('chat-popup');
-  const closeBtn  = document.getElementById('chat-close');
-  const tooltip   = document.getElementById('chat-tooltip');
-  const iconChat  = document.getElementById('icon-chat');
+  const btn = document.getElementById('chat-btn');
+  const popup = document.getElementById('chat-popup');
+  const closeBtn = document.getElementById('chat-close');
+  const tooltip = document.getElementById('chat-tooltip');
+  const iconChat = document.getElementById('icon-chat');
   const iconClose = document.getElementById('icon-close');
   let isOpen = false;
 
@@ -956,7 +1018,6 @@
     popup.style.display = 'flex';
     requestAnimationFrame(() => popup.classList.add('open'));
   }
-
   function closeChat() {
     isOpen = false;
     iconChat.style.display = 'block';
@@ -967,58 +1028,30 @@
 
   btn.addEventListener('click', () => isOpen ? closeChat() : openChat());
   closeBtn.addEventListener('click', closeChat);
-
-  // Hide tooltip after 6 seconds
   setTimeout(() => { tooltip.style.display = 'none'; }, 6000);
 
-  // ── ChatKit init ──
   const DOMAIN_KEY = 'domain_pk_6a32dcc152dc81909d917d13b82921d202860f273e5c16da';
   const API_URL = 'https://openai.secondbrainos.com/chatkit';
-
-  const customFetch = (url, options = {}) => {
-    return fetch(url, {
-      ...options,
-      headers: {
-        ...options.headers,
-        'X-Domain-Key': DOMAIN_KEY,
-      },
-    });
-  };
+  const customFetch = (url, options = {}) => fetch(url, { ...options, headers: { ...options.headers, 'X-Domain-Key': DOMAIN_KEY } });
 
   function initChatKit() {
     const kit = document.querySelector('openai-chatkit');
     if (kit && kit.setOptions) {
       kit.setOptions({
-        api: {
-          url: API_URL,
-          domainKey: DOMAIN_KEY,
-          fetch: customFetch,
-        },
-        theme: {
-          colorScheme: 'light',
-          color: {
-            accent: { primary: '#f59e0b', level: 2 },
-          },
-          radius: 'round',
-          density: 'spacious',
-        },
+        api: { url: API_URL, domainKey: DOMAIN_KEY, fetch: customFetch },
+        theme: { colorScheme: 'light', color: { accent: { primary: '#0ea5e9', level: 2 } }, radius: 'round', density: 'spacious' },
         startScreen: {
-          greeting: 'Hi! I can help you book, reschedule, or cancel appointments. What would you like to do?',
+          greeting: 'Hi! I can help you learn about Omniqo or book a free strategy call. What would you like to do?',
           prompts: [
-            { label: 'Book an appointment', prompt: 'I want to book an appointment', icon: 'calendar' },
-            { label: 'Check availability', prompt: 'What times are available?', icon: 'clock' },
-            { label: 'Reschedule', prompt: 'I need to reschedule my appointment', icon: 'reload' }
+            { label: 'Book a free call', prompt: 'I want to book a free strategy call', icon: 'calendar' },
+            { label: 'Our services', prompt: 'What services does Omniqo offer?', icon: 'clock' },
+            { label: 'Check availability', prompt: 'What times are available for a call?', icon: 'reload' }
           ]
         },
-        composer: {
-          placeholder: 'Ask me about scheduling...'
-        }
+        composer: { placeholder: 'Ask me about Omniqo...' }
       });
-    } else {
-      setTimeout(initChatKit, 50);
-    }
+    } else { setTimeout(initChatKit, 50); }
   }
-
   initChatKit();
 </script>
 
